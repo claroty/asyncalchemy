@@ -1,9 +1,10 @@
 [tool.poetry]
 name = "asyncalchemy"
-version = "1.0.0"
+version = "1.0.1"
 description = "A thin async wrapper for SQLAlchemy sessions."
 authors = ["Shaul Kramer <shaulkr@gmail.com>", "Guy Zylberberg <guyzyl@gmail.com>", "Claroty Open Source <opensource@claroty.com>"]
 license = "Apache-2.0"
+readme = "README.md"
 homepage = "https://github.com/claroty/AsyncAlchemy"
 documentation = "https://github.com/claroty/AsyncAlchemy"
 

@@ -20,5 +20,5 @@ jobs:
         poetry install
     - name: Analysing the code with pylint + mypy
       run: |
-        pylint asyncalchemy
-        mypy asyncalchemy
+        python3 -m pylint asyncalchemy
+        python3 -m mypy asyncalchemy

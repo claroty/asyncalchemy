@@ -13,7 +13,7 @@ from asyncalchemy.session_committer import SessionCommitter
 
 def create_session_factory_from_engine(engine: Engine) -> Callable[[Optional[Session]], SessionCommitter]:
     """
-    Create an Sqlalchemy session factory from an engine instance.
+    Create an SQLAlchemy session factory from an engine instance.
 
     :param engine: An instance of an SQLAlchemy engine.
     :returns: A function of (reuse_session=None) -> SessionCommitter

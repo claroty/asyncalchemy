@@ -33,7 +33,7 @@ class SessionCommitter:
 
 
     async def __aenter__(self) -> "AsyncDBSession":
-        if self._session is None:
+        if self._reuse_session is None:
             self._session = await run_sync(self._session_maker)
         if not isinstance(self._session, AsyncDBSession):
             self._session = AsyncDBSession(self._session)
@@ -46,7 +46,7 @@ class SessionCommitter:
         """
         Commit changes on __aexit__, rollback if an exception occured, and close session.
         """
-        if self._session is None:
+        if self._reuse_session is not None or self._session is None:
             return
 
         try:

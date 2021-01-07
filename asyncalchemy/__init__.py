@@ -10,8 +10,12 @@ from sqlalchemy.ext.declarative.api import DeclarativeMeta
 
 from asyncalchemy.session_committer import SessionCommitter
 
+# Callable doesn't support optional parameters (reuse_session in our case),
+#   therefore the "..." convention is used.
+SessionFactoryType = Callable[..., SessionCommitter]
 
-def create_session_factory_from_engine(engine: Engine) -> Callable[[Optional[Session]], SessionCommitter]:
+
+def create_session_factory_from_engine(engine: Engine) -> SessionFactoryType:
     """
     Create an SQLAlchemy session factory from an engine instance.
 
@@ -34,7 +38,7 @@ def create_session_factory_from_engine(engine: Engine) -> Callable[[Optional[Ses
 
 
 def create_session_factory(uri: str, base: Optional[DeclarativeMeta] = None,
-    **engine_kwargs: Dict[Any, Any]) -> Callable[[Optional[Session]], SessionCommitter]:
+    **engine_kwargs: Dict[Any, Any]) -> SessionFactoryType:
     """
     Create an SQLAlchemy session factory.
 

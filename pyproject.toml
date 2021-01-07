@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asyncalchemy"
-version = "0.0.0"
+version = "0.0.0"   # For poetry-dynamic-versioning
 description = "A thin async wrapper for SQLAlchemy sessions."
 authors = ["Claroty Open Source <opensource@claroty.com>",
            "Shaul Kramer <shaulkr@gmail.com>",

@@ -1,0 +1,12 @@
+{
+    "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "asyncalchemy"
+    ],
+    "python.linting.enabled": true,
+    "python.linting.mypyEnabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--enable=F,E,W"
+    ],
+}

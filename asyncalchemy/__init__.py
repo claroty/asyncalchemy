@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+from asyncio import get_event_loop
+from concurrent.futures import ThreadPoolExecutor
 from typing import Any, Dict, Callable, Optional
 
 from sqlalchemy import create_engine
@@ -14,6 +16,8 @@ from asyncalchemy.session_committer import SessionCommitter
 #   therefore the "..." convention is used.
 SessionFactoryType = Callable[..., SessionCommitter]
 
+SQLITE_DRIVER_NAME = 'pysqlite'
+
 
 def create_session_factory_from_engine(engine: Engine) -> SessionFactoryType:
     """
@@ -23,6 +27,13 @@ def create_session_factory_from_engine(engine: Engine) -> SessionFactoryType:
     :returns: A function of (reuse_session=None) -> SessionCommitter
     """
     session_maker = sessionmaker(bind=engine)
+
+    # SQLite workaround: SQLite objects cannot be shared between threads
+    if engine.driver == SQLITE_DRIVER_NAME:
+        print('WARNING: Sqlite backend detected. Using single threaded executor '
+			  '- DO NOT USE IN PRODUCTION!')
+        executor = ThreadPoolExecutor(max_workers=1)
+        get_event_loop().set_default_executor(executor)
 
     def factory(reuse_session: Optional[Session] = None) -> SessionCommitter:
         """

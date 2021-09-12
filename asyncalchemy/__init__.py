@@ -10,6 +10,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.ext.declarative.api import DeclarativeMeta
 
+from asyncalchemy.global_executor import set_global_executor
 from asyncalchemy.session_committer import SessionCommitter
 
 # Callable doesn't support optional parameters (reuse_session in our case),
@@ -33,7 +34,7 @@ def create_session_factory_from_engine(engine: Engine) -> SessionFactoryType:
         print('WARNING: Sqlite backend detected. Using single threaded executor '
 			  '- DO NOT USE IN PRODUCTION!')
         executor = ThreadPoolExecutor(max_workers=1)
-        get_event_loop().set_default_executor(executor)
+        set_global_executor(global_executor=executor)
 
     def factory(reuse_session: Optional[Session] = None) -> SessionCommitter:
         """
